@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game</title>
+    <script
+      src="https://kit.fontawesome.com/25bc89a4e6.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="grid-container">
+      <h1>Rock Paper Scissors</h1>
+      <div id="rock" class="far fa-hand-rock" onclick="choose('rock');"></div>
+      <div
+        id="paper"
+        class="far fa-hand-paper"
+        onclick="choose('paper');"
+      ></div>
+
+      <div
+        id="scissors"
+        class="far fa-hand-scissors"
+        onclick="choose('scissors');"
+      ></div>
+      <div id="result"></div>
+      <div class="score">
+        Your score
+        <div id="yourScore"></div>
+      </div>
+      <div id="compGuess"></div>
+      <div class="score">
+        Machine score
+        <div id="compScore"></div>
+      </div>
+    </div>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap");
+
+      body {
+        margin: 0;
+        padding: 110px;
+        background-image: radial-gradient(
+          circle,
+          #ff0090,
+          #e71083,
+          #cf1776,
+          #b81b69,
+          #a11d5d,
+          #901c54,
+          #801a4b,
+          #701842,
+          #621439,
+          #551031,
+          #480d29,
+          #3b0921
+        );
+        font-family: "Roboto", sans-serif;
+      }
+
+      .grid-container {
+        margin: 0 7%;
+        display: grid;
+        grid-template-columns: 35% 30% 35%;
+        grid-column-gap: 30px;
+        grid-row-gap: 15px;
+      }
+
+      #rock,
+      #paper,
+      #scissors {
+        cursor: grab;
+      }
+
+      .far,
+      #compGuess,
+      #result {
+        width: 100%;
+        height: 20px;
+        font-size: 2rem;
+        text-align: center;
+        border-radius: 30px;
+        border: 3px solid #ffb3e6;
+        padding: 35px 5px 40px 5px;
+        background-image: radial-gradient(
+          circle,
+          #ffddf4,
+          #fdd0ef,
+          #fcc4e9,
+          #fab7e4,
+          #f8aade,
+          #f79fd9,
+          #f594d5,
+          #f489d0,
+          #f37dcb,
+          #f370c6,
+          #f262c1,
+          #f152bc
+        );
+      }
+
+      #result,
+      h1 {
+        width: 100%;
+        height: 10px;
+        font-size: 35px;
+        text-align: center;
+        grid-column: 1 / span 3;
+      }
+
+      h1 {
+        text-decoration: underline;
+        color: white;
+      }
+
+      #result {
+        height: 10px;
+        line-height: 15px;
+      }
+
+      #compGuess {
+        min-width: 45px;
+        grid-column: 2 / span 1;
+        border: 7px double #ffb3e6;
+      }
+
+      .score {
+        text-align: center;
+        font-size: 1.2rem;
+      }
+
+      #yourScore,
+      #compScore {
+        padding: 10px;
+        font-size: 2rem;
+      }
+    </style>
+
+    <script>
+      window.onload = init;
+
+      function init() {
+        guesses = ["paper", "rock", "scissors"];
+        compChoice = "";
+        result = document.querySelector("#compGuess");
+        yourScore = 0;
+        compScore = 0;
+      }
+
+      function choose(yourChoice) {
+        compChoice = guesses[Math.floor(Math.random() * guesses.length)];
+        var guessClass = "far fa-hand-" + compChoice;
+        result.className = guessClass;
+        checkWin(yourChoice, compChoice);
+      }
+
+      function checkWin(yourChoice, compChoice) {
+        var result = document.querySelector("#result");
+        if (
+          (yourChoice === "rock" && compChoice === "paper") ||
+          (yourChoice === "paper" && compChoice === "scissors") ||
+          (yourChoice === "scissors" && compChoice === "rock")
+        ) {
+          printResult("You lost!");
+          compScore += 1;
+        } else {
+          if (yourChoice === compChoice) {
+            printResult("It's a draw!");
+          } else {
+            printResult("You won!");
+            yourScore += 1;
+          }
+        }
+        printScore(yourScore, compScore);
+      }
+      function printResult(result) {
+        var res = document.querySelector("#result");
+        res.innerHTML = result;
+      }
+      function printScore(you, comp) {
+        document.querySelector("#yourScore").innerHTML = you;
+        document.querySelector("#compScore").innerHTML = comp;
+      }
+    </script>
+  </body>
+</html>
